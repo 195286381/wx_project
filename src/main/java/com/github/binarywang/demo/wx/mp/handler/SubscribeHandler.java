@@ -50,8 +50,23 @@ public class SubscribeHandler extends AbstractHandler {
             return responseResult;
         }
 
+        // String msg_bak = "感谢你对武汉昆仑润滑的关注!!!";
+        String msg = "感谢辣么美的你对武汉昆仑润滑油微信公众号的关注！\n" +
+            "点击下方【微信商城】菜单，即可享受昆仑油品线上购买优惠；\n" +
+            "\n" +
+            "\n" +
+            "如您需了解更多功能，请回复数字：\n" +
+            "【1】即可进入“微信商城客户服务中心”；\n" +
+            "【2】即可登录“昆仑润滑油官方微网”；\n" +
+            "【3】了解更多，昆仑润滑油杯·2017中国量产车性能大赛相关详情；\n" +
+            "【4】昆仑润滑产品，一目了然；\n" +
+            "【5】获取更多区域服务信息；\n" +
+            "【6】客服中心，欢迎您的咨询！\n" +
+            "\n" +
+            "再次感谢您对昆仑润滑油的关注与支持！";
+
         try {
-            return new TextBuilder().build("感谢关注", wxMessage, weixinService);
+            return new TextBuilder().build(msg, wxMessage, weixinService);
         } catch (Exception e) {
             this.logger.error(e.getMessage(), e);
         }

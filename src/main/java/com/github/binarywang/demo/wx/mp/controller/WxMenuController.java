@@ -4,6 +4,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +26,10 @@ import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import static me.chanjar.weixin.common.api.WxConsts.MenuButtonType;
 
 /**
+ * <pre>
+ *     微信菜单Rest服务
+ * </pre>
+ *
  * @author Binary Wang(https://github.com/binarywang)
  */
 @RestController
@@ -45,46 +51,106 @@ public class WxMenuController {
         return WxMpConfiguration.getMpServices().get(appid).getMenuService().menuCreate(menu);
     }
 
+
+    /**
+     * <pre>
+     *     创建自定义菜单
+     * </pre>
+     *
+     * @param appid
+     * @return
+     * @throws WxErrorException
+     * @throws MalformedURLException
+     */
     @GetMapping("/create")
     public String menuCreateSample(@PathVariable String appid) throws WxErrorException, MalformedURLException {
+        // @域名
         WxMenu menu = new WxMenu();
+
+
+        /**
+         * <pre>
+         *     服务类菜单
+         * </pre>
+         */
         WxMenuButton button1 = new WxMenuButton();
-        button1.setType(MenuButtonType.CLICK);
-        button1.setName("今日歌曲");
-        button1.setKey("V1001_TODAY_MUSIC");
+        button1.setName("服务");
 
-//        WxMenuButton button2 = new WxMenuButton();
-//        button2.setType(WxConsts.BUTTON_MINIPROGRAM);
-//        button2.setName("小程序");
-//        button2.setAppId("wx286b93c14bbf93aa");
-//        button2.setPagePath("pages/lunar/index.html");
-//        button2.setUrl("http://mp.weixin.qq.com");
+        WxMenuButton button11 = new WxMenuButton();
+        button11.setType(MenuButtonType.VIEW);
+        button11.setName("车保养");
+        button11.setUrl("http://zsy.nat300.top/page/hello");
 
+        WxMenuButton button12 = new WxMenuButton();
+        button12.setType(MenuButtonType.VIEW);
+        button12.setName("防伪查询");
+//      button12.setUrl("http://kunlunlube.cnpc.com.cn/klrhy/fwzs/fwzs.shtml");
+        button12.setUrl("http://kunlunlube.cnpc.com.cn/klrhy/xhtml/public/protect/protect.html?support=taiji");
+
+        WxMenuButton button13 = new WxMenuButton();
+        button13.setType(MenuButtonType.VIEW);
+        button13.setName("专属经理");
+        button13.setUrl("http://zsy.nat300.top/page/hello");
+
+        WxMenuButton button14 = new WxMenuButton();
+        button14.setType(MenuButtonType.VIEW);
+        button14.setName("老昆说车");
+        button14.setUrl("http://zsy.nat300.top/page/hello");
+
+        /**
+         * <pre>
+         *     产品类菜单
+         * </pre>
+         */
+        WxMenuButton button2 = new WxMenuButton();
+        button2.setName("产品");
+
+        WxMenuButton button21 = new WxMenuButton();
+        button21.setType(MenuButtonType.VIEW);
+        button21.setName("企业风采");
+        button21.setUrl("http://zsy.nat300.top/page/hello");
+
+        WxMenuButton button22 = new WxMenuButton();
+        button22.setType(MenuButtonType.VIEW);
+        button22.setName("昆仑产品");
+        button22.setUrl("http://zsy.nat300.top/page/hello");
+
+        WxMenuButton button23 = new WxMenuButton();
+        button23.setType(MenuButtonType.VIEW);
+        button23.setName("官方旗舰店");
+        button23.setUrl("http://zsy.nat300.top/page/hello");
+
+        WxMenuButton button24 = new WxMenuButton();
+        button24.setType(MenuButtonType.VIEW);
+        button24.setName("选油助手");
+        button24.setUrl("http://klmall.naqumufa.com/oosweb/app/common/wx/kunlunSecond/chooseMyCar");
+
+        /**
+         * <pre>
+         *     会员中心菜单
+         * </pre>
+         */
         WxMenuButton button3 = new WxMenuButton();
-        button3.setName("菜单");
-
-        menu.getButtons().add(button1);
-        // menu.getButtons().add(button2);
-        menu.getButtons().add(button3);
+        button3.setName("会员中心");
 
         WxMenuButton button31 = new WxMenuButton();
         button31.setType(MenuButtonType.VIEW);
-        button31.setName("搜索");
-        button31.setUrl("http://www.soso.com/");
+        button31.setName("推广活动");
+        button31.setUrl("http://zsy.nat300.top/page/hello");
 
         WxMenuButton button32 = new WxMenuButton();
         button32.setType(MenuButtonType.VIEW);
-        button32.setName("视频");
+        button32.setName("红包活动");
         button32.setUrl("http://v.qq.com/");
 
         WxMenuButton button33 = new WxMenuButton();
         button33.setType(MenuButtonType.CLICK);
-        button33.setName("赞一下我们");
+        button33.setName("积分中心");
         button33.setKey("V1001_GOOD");
 
         WxMenuButton button34 = new WxMenuButton();
         button34.setType(MenuButtonType.VIEW);
-        button34.setName("获取用户信息");
+        button34.setName("经销商专属活动");
 
         ServletRequestAttributes servletRequestAttributes =
             (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -97,6 +163,20 @@ public class WxMenuController {
                     WxConsts.OAuth2Scope.SNSAPI_USERINFO, null);
             button34.setUrl(url);
         }
+
+        menu.getButtons().add(button1);
+        menu.getButtons().add(button2);
+        menu.getButtons().add(button3);
+
+        button1.getSubButtons().add(button11);
+        button1.getSubButtons().add(button12);
+        button1.getSubButtons().add(button13);
+        button1.getSubButtons().add(button14);
+
+        button2.getSubButtons().add(button21);
+        button2.getSubButtons().add(button22);
+        button2.getSubButtons().add(button23);
+        button2.getSubButtons().add(button24);
 
         button3.getSubButtons().add(button31);
         button3.getSubButtons().add(button32);
@@ -187,6 +267,8 @@ public class WxMenuController {
      */
     @GetMapping("/getSelfMenuInfo")
     public WxMpGetSelfMenuInfoResult getSelfMenuInfo(@PathVariable String appid) throws WxErrorException {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
         return WxMpConfiguration.getMpServices().get(appid).getMenuService().getSelfMenuInfo();
     }
 }

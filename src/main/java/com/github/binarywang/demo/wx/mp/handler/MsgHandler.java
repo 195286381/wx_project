@@ -42,8 +42,43 @@ public class MsgHandler extends AbstractHandler {
             e.printStackTrace();
         }
 
-        //TODO 组装回复消息
-        String content = "收到信息内容：" + JsonUtils.toJson(wxMessage);
+        String strContent = wxMessage.getContent().toLowerCase().trim();
+        String content;
+        switch (strContent) {
+            case "1": {
+                content = "昆仑微信商城服务中心\n" +
+                    "\n" +
+                    "客服电话：010-89258896\n" +
+                    "客户电话：010-89289899\n" +
+                    "网络营销服务电话：01089258898";
+            }
+            break;
+            case "2": {
+                content = "开发中";
+            }
+            break;
+            case "3": {
+                content = "开发中";
+            }
+            break;
+            case "4": {
+                content = "开发中";
+            }
+            break;
+            case "5": {
+                content = "开发中";
+            }
+            break;
+            case "6": {
+                content = "开发中";
+            }
+            break;
+
+            default: {
+                content = "收到信息内容：" + JsonUtils.toJson(wxMessage);
+            }
+            break;
+        }
 
         return new TextBuilder().build(content, wxMessage, weixinService);
 
